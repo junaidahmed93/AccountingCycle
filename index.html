@@ -20,22 +20,48 @@
         <button ng-click="done(entry)">DONE</button>
 
     </div>
+    
+    
+    <div ng-controller="testingController">
+        <span>Hello Pak</span>
+         <input type="text" ng-model="test">
+        <div ng-if="func()">           
+            <h3>Hello Div</h3>
+        </div>
+    </div>
+    
+    <div ng-controller="Ctrl3">
+        <h3>DIV 3</h3>
+        
+        <div ng-repeat="(key,value) in Balance">
+              
+              <table>
+                  <tr ng-repeat="item in value">
+                      <td ng-if="count">{{key}}</td>
+                      <td ng-if="checkAccount(key)">{{item.Total}}</td>
+                      <td>{{item.Total}}</td>
+                  </tr>
+              </table>
+              
+              <!--{{key}}
+              <ul ng-repeat="item in value">
+                 <div ng-if="check(key)">
+                     {{item.CreditTotal - item.DebitTotal}}
+                 </div>
+                  
+              </div>-->
+         
+       </div>
+       
+        <!--<div ng-repeat="a in Balance">
+            {{a}}
+        </div>-->
+    </div>
 
     <div ng-controller="Ctrl2">
-        <!--<ul>
-            <li ng-repeat="item in generalJournal track by $index">
-                {{item | json}}
-            </li>
-            {{generalJournal}}
-        </ul>  -->
-
-        <ul>
-            <li ng-repeat="item in generalJournal track by $index">
-                <!--{{item | json}}-->
-                {{item.Debit.Title}}
-            </li>
-        </ul>
-
+       
+       
+       
         <table>
 
             <tr class="tr-border">

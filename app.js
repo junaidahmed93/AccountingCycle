@@ -87,32 +87,32 @@ app.controller('Ledger-posting', function ($scope) {
     var InitialCredit= 0 , InitialDebit=0  ;
 
         $scope.checking = snapshot.val()
-        console.log( $scope.checking)
+        //console.log( $scope.checking)
         for (var key in $scope.checking) {
             InitialCredit = 0; InitialDebit=0;
-            console.log(key);
+           // console.log(key);
             if ($scope.checking.hasOwnProperty(key)) {
-                console.log($scope.checking[key])
+               // console.log($scope.checking[key])
                 // $scope.newWala.push($scope.checking[key]);
                 for (var keyInsider in $scope.checking[key]) {
-                    console.log(keyInsider);
+                   // console.log(keyInsider);
                     if ($scope.checking[key].hasOwnProperty(keyInsider)) {
-                        console.log($scope.checking[key][keyInsider]);
+                       // console.log($scope.checking[key][keyInsider]);
                         if ($scope.checking[key][keyInsider].Debit) {
-                            console.log($scope.checking[key][keyInsider].Debit.Amount);
+                           // console.log($scope.checking[key][keyInsider].Debit.Amount);
                             InitialDebit = InitialDebit +  $scope.checking[key][keyInsider].Debit.Amount;
                             $scope.checking[key][keyInsider].Debit.Total=InitialDebit;
-                            console.log(InitialDebit);                            
+                           // console.log(InitialDebit);                            
                             ref.child('Balance').child(key).child('Debit').set({
                                 DebitTotal : InitialDebit
                             })
                             //InitialDebit = 0;
                         }
                         if ($scope.checking[key][keyInsider].Credit) {
-                            console.log($scope.checking[key][keyInsider].Credit.Amount);
+                           // console.log($scope.checking[key][keyInsider].Credit.Amount);
                             InitialCredit = InitialCredit +  $scope.checking[key][keyInsider].Credit.Amount;
                             $scope.checking[key][keyInsider].Credit.Total=InitialCredit;
-                            console.log(InitialCredit);                            
+                           // console.log(InitialCredit);                            
                            
                            // console.log('Note Name 1' , noteName1);
                             ref.child('Balance').child(key).child('Credit').set({
@@ -162,3 +162,78 @@ app.controller('Ledger-posting', function ($scope) {
 
     // });
 })
+
+app.controller('Ctrl3',function($scope){
+    
+    $scope.Balance = [];
+    ref.child('Balance').on('value',function(snapshot){
+        console.log(snapshot.val());
+        $scope.Balance = snapshot.val();
+        
+        for(var key in $scope.Balance)
+        {
+            console.log(key);
+            if($scope.Balance.hasOwnProperty(key))
+            {    var dTotal=0,cTotal=0;
+                for(var key1 in $scope.Balance[key])
+                {   
+                   
+                    if($scope.Balance[key][key1].DebitTotal)
+                    {
+                        dTotal = $scope.Balance[key][key1].DebitTotal;
+                    }
+                    if($scope.Balance[key][key1].CreditTotal)
+                    {
+                        cTotal = $scope.Balance[key][key1].CreditTotal;
+                    }
+                    if(cTotal)
+                    { console.log(cTotal);
+                        if(dTotal)
+                        { console.log(dTotal);
+                            overall = dTotal - cTotal;
+                            console.log(overall);
+                            if(overall>=0)
+                            {
+                                $scope.Balance[key][key1].Total = overall;
+                            }
+                            if(overall<0)
+                            {
+                                overall= (overall) * (-1);
+                                console.log(overall);
+                                $scope.Balance[key][key1].Total = overall;
+                            }
+                        }
+                    }
+                    
+                 
+                }
+            }
+        }
+        
+        $scope.$digest();
+    },function(errorObject){
+        console.log("The read failed: " + errorObject.code);
+    });
+    
+    $scope.checkAccount = function(a)
+    {  if(a == 'cash')
+        {
+            return true;
+        }
+        
+    }
+});
+
+app.controller('testingController',function($scope){
+    
+    $scope.test;
+    $scope.data = {};
+    $scope.func = function(){
+        if($scope.test == 1){
+            return true;
+        }
+        
+       
+    }
+ $scope.data.isVisible = true;
+});
