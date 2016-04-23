@@ -1,0 +1,55 @@
+table{border-collapse:collapse;}
+
+.tr-border {
+   
+    border: 1px solid #000;
+
+}
+td{
+    padding: 10px;
+}
+.GJ{
+    height: 100px;
+    width: 500px;
+    border: 1px solid black;
+}
+.r1, .r2{
+    border: 1px solid green;
+    height: 40px;
+    /*float: left;*/
+    width: full;
+}
+
+.Date{
+    width: 50px;
+    float: left;
+}
+
+.Title{
+    width: 200px;
+    float: left;
+}
+
+.Debit{
+    width: 125px;
+    float: left;
+    
+}
+
+.credit{
+    width: 125px;
+    float: left;
+}
+div{
+    border: 1px solid red;
+}
+.ledger-posting{
+    width: 200px;
+    float: left;
+}
+
+h2{
+    text-align: center;
+}
+
+ 

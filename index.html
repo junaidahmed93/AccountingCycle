@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/firebase/firebase.js"></script>
+    <script src="app.js"></script>
+</head>
+
+<body ng-app="accounting">
+    <div ng-controller="Ctrl1">
+        <input type="date" ng-model="entry.date" placeholder="Date" required>
+        <input type="text" ng-model="entry.debitTitle" placeholder="Debit Entry" required>
+        <input type="number" ng-model="entry.debitAmount" placeholder="Debit Amount" required>
+        <input type="text" ng-model="entry.creditTitle" placeholder="Credit Entry" required>
+        <input type="number" ng-model="entry.creditAmount" placeholder="Credit Amount" required>
+        <button ng-click="done(entry)">DONE</button>
+
+    </div>
+
+    <div ng-controller="Ctrl2">
+        <!--<ul>
+            <li ng-repeat="item in generalJournal track by $index">
+                {{item | json}}
+            </li>
+            {{generalJournal}}
+        </ul>  -->
+
+        <ul>
+            <li ng-repeat="item in generalJournal track by $index">
+                <!--{{item | json}}-->
+                {{item.Debit.Title}}
+            </li>
+        </ul>
+
+        <table>
+
+            <tr class="tr-border">
+                <th>Date</th>
+                <th>Title</th>
+                <th>Debit</th>
+                <th>Credit</th>
+            </tr>
+            <tr class="tr-border" ng-repeat-start="d in generalJournal">
+                <td>{{d.Debit.Date}}</td>
+                <td>{{d.Debit.Title}}</td>
+                <td>{{d.Debit.Amount}}</td>
+                <td></td>
+
+            </tr>
+            <tr class="tr-border" ng-repeat-end>
+                <td></td>
+                <td> <span>  </span>{{ d.Credit.Title }}</td>
+                <td></td>
+                <td>{{ d.Credit.Amount }}</td>
+            </tr>
+        </table>
+
+    </div>
+
+
+    <div ng-controller="Ledger-posting">
+        <div>
+            <ul>
+                <li ng-repeat="(key,value) in checking">
+                    {{key}}
+                        <!--<span ng-repeat="item in value">{{value}}</span>-->
+                </li>
+            </ul>
+        </div>
+        <div ng-repeat="(key,value) in checking" class="ledger-posting">
+            <h2>{{key}}</h2>
+            <table >     
+            <tr>
+                <th>Debit</th>
+                <th>Credit</th>
+                <th>Balance</th>
+            </tr>   
+            <tr ng-repeat="item in value">
+                <td  >{{item.Debit.Amount}}</td>
+                <td>{{item.Credit.Amount}}</td>
+                <td>{{item.Debit.Total}}</td>
+                <td>{{item.Credit.Total}}</td>
+            </tr>
+        </table>
+        </div>
+        
+    </div>
+</body>
+
+</html>
